@@ -5,3 +5,42 @@ body {
   height: 100%;
   box-sizing: border-box;
 }
+
+header {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  font-size: 2rem;
+}
+
+.boards-container {
+  display: flex;
+  justify-content: center;
+  gap: 10rem;
+  padding: 1rem;
+}
+
+.player-1-container,
+.player-2-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+td {
+  width: 40px;
+  height: 40px;
+  background-color: rgb(0, 0, 195);
+  border: 1px solid rgb(55, 166, 202);
+}
+
+.ui {
+  display: flex;
+  justify-content: center;
+}

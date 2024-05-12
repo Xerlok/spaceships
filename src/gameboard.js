@@ -1,4 +1,3 @@
-/*eslint-disable*/
 export default class Gameboard {
   constructor() {
     this.board = new Map();
@@ -22,8 +21,8 @@ export default class Gameboard {
       throw new Error('Board is not build!');
     }
 
-    let newShipCoordinates = new Array();
-  
+    const newShipCoordinates = [];
+
     for (let i = 0; i < coords.length; i += 1) {
       this.board.set(coords[i], { status: 'S', ship: newShip });
       this.ships.push(newShip);
@@ -40,8 +39,7 @@ export default class Gameboard {
       attackedSquare.status = 'M';
       return attackedSquare.status;
     }
-
-    else if(attackedSquare.status === 'S') {
+    if (attackedSquare.status === 'S') {
       attackedSquare.status = 'H';
       attackedSquare.ship.hit();
       this.isEndgame();

@@ -1,5 +1,3 @@
-/*eslint-disable*/
-import { experiments } from 'webpack';
 import Gameboard from './gameboard';
 import Ship from './ship';
 
@@ -14,7 +12,7 @@ describe('Gameboard', () => {
   beforeEach(() => {
     gameboard = new Gameboard();
     gameboard.buildBoard();
-  })
+  });
 
   test('places a ship of specified length', () => {
     expect(gameboard.placeShip(new Ship(1), ['A1'])).toStrictEqual(['A1']);
@@ -65,8 +63,8 @@ describe('Gameboard', () => {
 
   test('game ends when all ships are sunk', () => {
     gameboard.placeShip(new Ship(1), ['A1']);
-    gameboard.receiveAttack('A1');
     gameboard.placeShip(new Ship(3), ['C4', 'D4', 'E4']);
+    gameboard.receiveAttack('A1');
     gameboard.receiveAttack('C4');
     gameboard.receiveAttack('D4');
     gameboard.receiveAttack('E4');
