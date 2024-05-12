@@ -2,6 +2,8 @@
 export default class Gameboard {
   constructor() {
     this.board = new Map();
+    this.ships = [];
+    this.endgame = false;
   }
 
   buildBoard() {
@@ -9,58 +11,57 @@ export default class Gameboard {
     letters.forEach((letter) => {
       for (let i = 1; i <= 10; i += 1) {
         const key = `${letter}${i}`;
-        this.board[key] = '';
+        this.board.set(key, { status: '', ship: null });
       }
     });
     return true;
   }
 
   placeShip(newShip, coords) {
-    if (Object.keys(this.board).length === 0) {
+    if (this.board.size === 0) {
       throw new Error('Board is not build!');
     }
 
-    let newShipCoordinates = [];
+    let newShipCoordinates = new Array();
   
-    switch (newShip.length) {
-      case 1:
-        this.board.set([coords], { status: 'S', ship: newShip });
-        newShipCoordinates = [coords];
-        break;
-      case 2:
-        this.board.B4 = 'S';
-        this.board.B5 = 'S';
-        newShipCoordinates = ['B4', 'B5'];
-        break;
-      case 3:
-        this.board.C4 = 'S';
-        this.board.D4 = 'S';
-        this.board.E4 = 'S';
-        newShipCoordinates = ['C4', 'D4', 'E4'];
-        break;
-      case 4:
-        this.board.F1 = 'S';
-        this.board.F2 = 'S';
-        this.board.F3 = 'S';
-        this.board.F4 = 'S';
-        newShipCoordinates = ['F1', 'F2', 'F3', 'F4'];
-        break;
-      case 5:
-        this.board.A7 = 'S';
-        this.board.B7 = 'S';
-        this.board.C7 = 'S';
-        this.board.D7 = 'S';
-        this.board.E7 = 'S';
-        newShipCoordinates = ['A7', 'B7', 'C7', 'D7', 'E7'];
-        break;
-      default:
-        throw new Error('wrong length!');
+    for (let i = 0; i < coords.length; i += 1) {
+      this.board.set(coords[i], { status: 'S', ship: newShip });
+      this.ships.push(newShip);
+      newShipCoordinates.push(coords[i]);
     }
+
     return newShipCoordinates;
   }
 
   receiveAttack(coords) {
     const attackedSquare = this.board.get(coords);
-    return attackedSquare;
+
+    if (attackedSquare.status === '') {
+      attackedSquare.status = 'M';
+      return attackedSquare.status;
+    }
+
+    else if(attackedSquare.status === 'S') {
+      attackedSquare.status = 'H';
+      attackedSquare.ship.hit();
+      this.isEndgame();
+      return attackedSquare.status;
+    }
+
+    return attackedSquare.status;
+  }
+
+  isEndgame() {
+    const shipsSunk = [];
+
+    this.ships.forEach((ship) => {
+      if (ship.isSunk) {
+        shipsSunk.push(true);
+      }
+    });
+
+    if (shipsSunk.length === this.ships.length) {
+      this.endgame = true;
+    }
   }
 }
