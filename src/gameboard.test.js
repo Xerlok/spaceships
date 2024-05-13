@@ -1,5 +1,4 @@
 import Gameboard from './gameboard';
-import Ship from './ship';
 
 test('Gameboard builds 10x10 board map', () => {
   const gameboard = new Gameboard();
@@ -15,29 +14,29 @@ describe('Gameboard', () => {
   });
 
   test('places a ship of specified length', () => {
-    expect(gameboard.placeShip(new Ship(1), ['A1'])).toStrictEqual(['A1']);
-    expect(gameboard.placeShip(new Ship(2), ['B4', 'B5'])).toStrictEqual(['B4', 'B5']);
-    expect(gameboard.placeShip(new Ship(3), ['C4', 'D4', 'E4'])).toStrictEqual(['C4', 'D4', 'E4']);
-    expect(gameboard.placeShip(new Ship(4), ['F1', 'F2', 'F3', 'F4'])).toStrictEqual(['F1', 'F2', 'F3', 'F4']);
-    expect(gameboard.placeShip(new Ship(5), ['A7', 'B7', 'C7', 'D7', 'E7'])).toStrictEqual(['A7', 'B7', 'C7', 'D7', 'E7']);
+    expect(gameboard.placeShip(1, ['A1'])).toStrictEqual(['A1']);
+    expect(gameboard.placeShip(2, ['B4', 'B5'])).toStrictEqual(['B4', 'B5']);
+    expect(gameboard.placeShip(3, ['C4', 'D4', 'E4'])).toStrictEqual(['C4', 'D4', 'E4']);
+    expect(gameboard.placeShip(4, ['F1', 'F2', 'F3', 'F4'])).toStrictEqual(['F1', 'F2', 'F3', 'F4']);
+    expect(gameboard.placeShip(5, ['A7', 'B7', 'C7', 'D7', 'E7'])).toStrictEqual(['A7', 'B7', 'C7', 'D7', 'E7']);
   });
 
   test('receives ship attack', () => {
-    gameboard.placeShip(new Ship(1), ['A1']);
+    gameboard.placeShip(1, ['A1']);
     expect(gameboard.receiveAttack('A1')).toBe('H');
 
-    gameboard.placeShip(new Ship(3), ['C4', 'D4', 'E4']);
+    gameboard.placeShip(3, ['C4', 'D4', 'E4']);
     expect(gameboard.receiveAttack('C4')).toBe('H');
     expect(gameboard.receiveAttack('D4')).toBe('H');
     expect(gameboard.receiveAttack('E4')).toBe('H');
   });
 
   test('received attacks increase hits in the ship', () => {
-    gameboard.placeShip(new Ship(1), ['A1']);
+    gameboard.placeShip(1, ['A1']);
     gameboard.receiveAttack('A1');
     expect(gameboard.board.get('A1').ship.hits).toBe(1);
 
-    gameboard.placeShip(new Ship(3), ['C4', 'D4', 'E4']);
+    gameboard.placeShip(3, ['C4', 'D4', 'E4']);
     gameboard.receiveAttack('C4');
     gameboard.receiveAttack('D4');
     gameboard.receiveAttack('E4');
@@ -56,14 +55,14 @@ describe('Gameboard', () => {
   });
 
   test('receiveAttack() can handle attack at the same square', () => {
-    gameboard.placeShip(new Ship(1), ['A1']);
+    gameboard.placeShip(1, ['A1']);
     gameboard.receiveAttack('A1');
     expect(gameboard.receiveAttack('A1')).toBe('H');
   });
 
   test('game ends when all ships are sunk', () => {
-    gameboard.placeShip(new Ship(1), ['A1']);
-    gameboard.placeShip(new Ship(3), ['C4', 'D4', 'E4']);
+    gameboard.placeShip(1, ['A1']);
+    gameboard.placeShip(3, ['C4', 'D4', 'E4']);
     gameboard.receiveAttack('A1');
     gameboard.receiveAttack('C4');
     gameboard.receiveAttack('D4');

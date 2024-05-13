@@ -1,3 +1,5 @@
+import Ship from './ship';
+
 export default class Gameboard {
   constructor() {
     this.board = new Map();
@@ -16,12 +18,13 @@ export default class Gameboard {
     return true;
   }
 
-  placeShip(newShip, coords) {
+  placeShip(shipLength, coords) {
     if (this.board.size === 0) {
       throw new Error('Board is not build!');
     }
 
     const newShipCoordinates = [];
+    const newShip = new Ship(shipLength);
 
     for (let i = 0; i < coords.length; i += 1) {
       this.board.set(coords[i], { status: 'S', ship: newShip });

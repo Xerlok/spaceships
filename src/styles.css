@@ -4,6 +4,8 @@ body {
   padding: 0px;
   height: 100%;
   box-sizing: border-box;
+  background-color: black;
+  color: lightblue;
 }
 
 header {
@@ -26,18 +28,47 @@ header {
   flex-direction: column;
   gap: 0.5rem;
   font-size: 1.5rem;
+  overflow: hidden;
+}
+
+.star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background-color: #fff;
+  border-radius: 50%;
+  animation: twinkle 2s infinite linear;
+}
+
+@keyframes twinkle {
+  0% { opacity: 1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 1; }
 }
 
 table {
   border-spacing: 0;
   border-collapse: collapse;
+  background: radial-gradient(ellipse at bottom, #253c56 0%, #191e3b 100%);
+  position: relative;
 }
 
 td {
   width: 40px;
   height: 40px;
-  background-color: rgb(0, 0, 195);
   border: 1px solid rgb(55, 166, 202);
+}
+
+.board-2-square-ship {
+  background-color: blue;
+}
+
+.board-2-square-hit {
+  background-color: red;
+}
+
+.board-2-square-miss {
+  background-color: gray;
 }
 
 .ui {
