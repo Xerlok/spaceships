@@ -42,6 +42,15 @@ function addBoardListeners(player, gameState) {
   })
 }
 
-export default function addEventListeners(player, gameState) {
+function addEventListeners(player, gameState) {
   addBoardListeners(player, gameState);
+}
+
+function renderBoards(player1, player2) {
+
+}
+
+export {
+  addEventListeners,
+  renderBoards
 }

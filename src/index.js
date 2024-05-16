@@ -1,6 +1,6 @@
 import './styles.css';
 import addStars from './starfield';
-import addEventListeners from './dom';
+import { addEventListeners, renderBoards } from './dom';
 import Gameboard from './gameboard';
 import Player from './player';
 import GameState from './gameState';
