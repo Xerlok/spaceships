@@ -1,10 +1,11 @@
 import Ship from './ship';
 
 export default class Gameboard {
-  constructor() {
+  constructor(player) {
     this.board = new Map();
     this.ships = [];
     this.endgame = false;
+    this.player = player;
   }
 
   buildBoard() {
@@ -28,9 +29,10 @@ export default class Gameboard {
 
     for (let i = 0; i < coords.length; i += 1) {
       this.board.set(coords[i], { status: 'S', ship: newShip });
-      this.ships.push(newShip);
       newShipCoordinates.push(coords[i]);
     }
+
+    this.ships.push(newShip);
 
     return newShipCoordinates;
   }
@@ -56,13 +58,16 @@ export default class Gameboard {
     const shipsSunk = [];
 
     this.ships.forEach((ship) => {
-      if (ship.isSunk) {
+      if (ship.isSunk()) {
         shipsSunk.push(true);
       }
     });
 
     if (shipsSunk.length === this.ships.length) {
       this.endgame = true;
+      return true;
     }
+
+    return false;
   }
 }

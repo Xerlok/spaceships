@@ -59,15 +59,18 @@ td {
   border: 1px solid rgb(55, 166, 202);
 }
 
-.board-2-square-ship {
+.board-2-square-ship,
+.board-1-square-ship {
   background-color: blue;
 }
 
-.board-2-square-hit {
+.board-2-square-hit,
+.board-1-square-hit {
   background-color: red;
 }
 
-.board-2-square-miss {
+.board-2-square-miss,
+.board-1-square-miss {
   background-color: gray;
 }
 

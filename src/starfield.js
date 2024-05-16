@@ -1,12 +1,10 @@
 const containers = document.querySelectorAll('.starfield');
-const numStars = 200; // Number of stars to create
+const numStars = 200;
 
-// Function to generate a random number within a range
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// Function to create a star element
 function createStar(container) {
   const star = document.createElement('div');
   star.classList.add('star');
