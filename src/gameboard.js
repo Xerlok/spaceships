@@ -1,11 +1,10 @@
 import Ship from './ship';
 
 export default class Gameboard {
-  constructor(player, gameState) {
+  constructor(gameState) {
     this.board = new Map();
     this.ships = [];
     this.gameState = gameState;
-    this.player = player;
   }
 
   buildBoard() {
