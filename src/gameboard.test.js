@@ -1,5 +1,6 @@
 import Gameboard from './gameboard';
 import Player from './player';
+import GameState from './gameState';
 
 test('Gameboard builds 10x10 board map', () => {
   const gameboard = new Gameboard();
@@ -8,9 +9,15 @@ test('Gameboard builds 10x10 board map', () => {
 
 describe('Gameboard', () => {
   let gameboard;
+  let player1;
+  let player2;
+  let gameState;
 
   beforeEach(() => {
-    gameboard = new Gameboard(new Player('Zerus', 'human1'));
+    player1 = new Player('Zerus', 'human1');
+    player2 = new Player('Shrek', 'ai');
+    gameState = new GameState(player1, player2);
+    gameboard = new Gameboard(player1, gameState);
     gameboard.buildBoard();
   });
 
@@ -68,6 +75,6 @@ describe('Gameboard', () => {
     gameboard.receiveAttack('C4');
     gameboard.receiveAttack('D4');
     gameboard.receiveAttack('E4');
-    expect(gameboard.endgame).toBe(true);
+    expect(gameboard.gameState.isGameOver).toBe(true);
   });
 });

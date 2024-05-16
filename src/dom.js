@@ -2,7 +2,7 @@
 const boardOneSquares = document.querySelectorAll('.board-1-square');
 const boardTwoSquares = document.querySelectorAll('.board-2-square');
 
-export default function addEventListeners(gameboard) {
+export default function addEventListeners(gameboard, gameState) {
   let board;
   let player;
   if (gameboard.player.type === 'human1') { 
@@ -15,30 +15,27 @@ export default function addEventListeners(gameboard) {
   }
 
   board.forEach((boardSquare) => {
-    const squareStatus = gameboard.board.get(boardSquare.getAttribute('data')).status;
+    let squareStatus = gameboard.board.get(boardSquare.getAttribute('data')).status;
+    const squareCoords = boardSquare.getAttribute('data');
+
     if (squareStatus === 'S') {
       boardSquare.classList.remove(`board-${player}-square-empty`);
       boardSquare.classList.add(`board-${player}-square-ship`);
     }
-  })
-
-  board.forEach((boardSquare) => {
-    const squareCoords = boardSquare.getAttribute('data');
-    const squareStatus = gameboard.board.get(boardSquare.getAttribute('data')).status;
-    const thisPlayerTurn = true;
 
     boardSquare.addEventListener('click', () => {
-      if (!gameboard.player.isActive()) {
-        if (squareStatus === 'S' && thisPlayerTurn) {
+      if (!gameboard.player.isActive() && !gameState.isGameOver) {
+        if (squareStatus === 'S') {
           boardSquare.classList.remove(`board-${player}-square-ship`);
           boardSquare.classList.add(`board-${player}-square-hit`);
-          gameboard.receiveAttack(squareCoords);
-          gameboard.player.switchPlayer();
+          squareStatus = gameboard.receiveAttack(squareCoords);
+          gameState.switchPlayer();
         }
-        if (squareStatus === '' && thisPlayerTurn) {
+        if (squareStatus === '') {
           boardSquare.classList.remove(`board-${player}-square-empty`);
           boardSquare.classList.add(`board-${player}-square-miss`);
-          gameboard.player.switchPlayer();
+          squareStatus = gameboard.receiveAttack(squareCoords);
+          gameState.switchPlayer();
         }
       }
     })

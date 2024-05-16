@@ -1,10 +1,11 @@
 import Ship from './ship';
 
 export default class Gameboard {
-  constructor() {
+  constructor(player, gameState) {
     this.board = new Map();
     this.ships = [];
-    this.endgame = false;
+    this.gameState = gameState;
+    this.player = player;
   }
 
   buildBoard() {
@@ -63,7 +64,7 @@ export default class Gameboard {
     });
 
     if (shipsSunk.length === this.ships.length) {
-      this.endgame = true;
+      this.gameState.gameOver();
       return true;
     }
 
