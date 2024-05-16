@@ -31,3 +31,6 @@ boardTwo.placeShip(3, ['G5', 'G6', 'G7']);
 boardTwo.placeShip(4, ['J1', 'J2', 'J3', 'J4']);
 boardTwo.placeShip(5, ['A7', 'B7', 'C7', 'D7', 'E7']);
 addEventListeners(player2, gameState);
+
+renderBoards(player1);
+renderBoards(player2);
