@@ -8,13 +8,4 @@ export default class Player {
   isActive() {
     return this.active;
   }
-
-  switchPlayer() {
-    if (this.active) {
-      this.active = false;
-    } else if (!this.active) {
-      this.active = true;
-    }
-    return this.active;
-  }
 }

@@ -1,4 +1,5 @@
 import Gameboard from './gameboard';
+import Player from './player';
 
 test('Gameboard builds 10x10 board map', () => {
   const gameboard = new Gameboard();
@@ -9,7 +10,7 @@ describe('Gameboard', () => {
   let gameboard;
 
   beforeEach(() => {
-    gameboard = new Gameboard();
+    gameboard = new Gameboard(new Player('Zerus', 'human1'));
     gameboard.buildBoard();
   });
 

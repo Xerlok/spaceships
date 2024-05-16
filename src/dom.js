@@ -28,14 +28,18 @@ export default function addEventListeners(gameboard) {
     const thisPlayerTurn = true;
 
     boardSquare.addEventListener('click', () => {
-      if (squareStatus === 'S' && thisPlayerTurn) {
-        boardSquare.classList.remove(`board-${player}-square-ship`);
-        boardSquare.classList.add(`board-${player}-square-hit`);
-        gameboard.receiveAttack(squareCoords);
-      }
-      if (squareStatus === '' && thisPlayerTurn) {
-        boardSquare.classList.remove(`board-${player}-square-empty`);
-        boardSquare.classList.add(`board-${player}-square-miss`);
+      if (!gameboard.player.isActive()) {
+        if (squareStatus === 'S' && thisPlayerTurn) {
+          boardSquare.classList.remove(`board-${player}-square-ship`);
+          boardSquare.classList.add(`board-${player}-square-hit`);
+          gameboard.receiveAttack(squareCoords);
+          gameboard.player.switchPlayer();
+        }
+        if (squareStatus === '' && thisPlayerTurn) {
+          boardSquare.classList.remove(`board-${player}-square-empty`);
+          boardSquare.classList.add(`board-${player}-square-miss`);
+          gameboard.player.switchPlayer();
+        }
       }
     })
   })
