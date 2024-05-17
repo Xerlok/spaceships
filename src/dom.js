@@ -21,16 +21,12 @@ function addBoardListeners(player, gameState) {
     boardSquare.addEventListener('click', () => {
       if (!player.isActive() && !gameState.isGameOver) {
         if (squareStatus === 'S') {
-          /*boardSquare.classList.remove(`board-${playerSquare}-square-ship`);
-          boardSquare.classList.add(`board-${playerSquare}-square-hit`);*/
-          squareStatus = player.gameboard.receiveAttack(squareCoords);
+          squareStatus = player.gameboard.receiveAttack(squareCoords, gameState);
           renderBoards(player);
           gameState.switchPlayer();
         }
         if (squareStatus === '') {
-          /*boardSquare.classList.remove(`board-${playerSquare}-square-empty`);
-          boardSquare.classList.add(`board-${playerSquare}-square-miss`);*/
-          squareStatus = player.gameboard.receiveAttack(squareCoords);
+          squareStatus = player.gameboard.receiveAttack(squareCoords, gameState);
           renderBoards(player);
           gameState.switchPlayer();
         }

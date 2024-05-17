@@ -1,7 +1,7 @@
 import Ship from './ship';
 
 export default class Gameboard {
-  constructor(gameState) {
+  constructor(gameState = null) {
     this.board = new Map();
     this.ships = [];
     this.gameState = gameState;

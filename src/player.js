@@ -3,6 +3,7 @@ export default class Player {
     this.name = name;
     this.type = type;
     this.gameboard = gameboard;
+    this.ai = null;
     this.active = false;
   }
 
