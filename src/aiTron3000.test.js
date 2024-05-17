@@ -27,7 +27,7 @@ describe('AI', () => {
   });
 
   test('aiTron returns a random coordinate to hit', () => {
-    expect(AITron3000.chooseSquare()).toMatch(/[A-J][1-9]/);
+    expect(AITron3000.chooseSquare(humanPlayer.gameboard.board)).toMatch(/[A-J][1-9]/);
   });
 
   test('aiTron changes state of the square', () => {

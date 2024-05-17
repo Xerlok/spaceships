@@ -6,7 +6,7 @@ import Player from './player';
 import GameState from './gameState';
 
 addStars();
-const gameState = new GameState();
+const gameState = new GameState('ai');
 const player1 = new Player('Zerus', 'human1', new Gameboard(gameState));
 const player2 = new Player('AItron3000', 'ai', new Gameboard(gameState));
 gameState.player1 = player1;

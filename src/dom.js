@@ -62,13 +62,13 @@ function addBoardListeners(player, gameState) {
       if (!player.isActive() && !gameState.isGameOver) {
         if (squareStatus === 'S') {
           squareStatus = player.gameboard.receiveAttack(squareCoords, gameState);
-          renderBoards(gameState);
           gameState.switchPlayer();
+          renderBoards(gameState);
         }
         if (squareStatus === '') {
           squareStatus = player.gameboard.receiveAttack(squareCoords, gameState);
-          renderBoards(gameState);
           gameState.switchPlayer();
+          renderBoards(gameState);
         }
       }
     });

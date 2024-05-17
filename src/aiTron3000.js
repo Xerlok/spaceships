@@ -3,23 +3,26 @@ export default class AITron3000 {
     let attackCoords = coords;
 
     if (coords === null) {
-      attackCoords = AITron3000.chooseSquare();
-    }
-    if (gameboard.board.get(attackCoords).status === 'M'
-    || gameboard.board.get(attackCoords).status === 'H') {
-      AITron3000.makeMove(gameboard, attackCoords);
-      return coords;
+      attackCoords = AITron3000.chooseSquare(gameboard.board);
     }
     gameboard.receiveAttack(attackCoords);
     return coords;
   }
 
-  static chooseSquare() {
-    const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-    const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+  static chooseSquare(board) {
+    const squaresToAttack = [];
+    board.forEach((value, key) => {
+      if (value.status !== 'H' && value.status !== 'M') {
+        squaresToAttack.push(key);
+      }
+    });
+    console.log(squaresToAttack);
 
-    const squareToAttack = letters[AITron3000.generateRandomInt(0, (letters.length - 1))]
-    + numbers[AITron3000.generateRandomInt(0, (numbers.length - 1))];
+    const squareToAttack = squaresToAttack[
+      AITron3000.generateRandomInt(0, (squaresToAttack.length - 1))
+    ];
+
+    console.log(squareToAttack);
 
     return squareToAttack;
   }
