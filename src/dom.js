@@ -1,17 +1,57 @@
-/*eslint-disable*/
 const boardOneSquares = document.querySelectorAll('.board-1-square');
 const boardTwoSquares = document.querySelectorAll('.board-2-square');
 
+function renderBoards(gameState) {
+  const players = [];
+  players.push(gameState.player1);
+  players.push(gameState.player2);
+
+  players.forEach((player) => {
+    const { board } = player.gameboard;
+    let boardSquares;
+    let boardNumber;
+    if (player.type === 'human1') {
+      boardSquares = boardOneSquares;
+      boardNumber = '1';
+    } else {
+      boardSquares = boardTwoSquares;
+      boardNumber = '2';
+    }
+
+    boardSquares.forEach((boardSquare) => {
+      const squareStatus = board.get(boardSquare.getAttribute('data')).status;
+
+      boardSquare.classList.remove(`board-${boardNumber}-square-empty`);
+      boardSquare.classList.remove(`board-${boardNumber}-square-ship`);
+      boardSquare.classList.remove(`board-${boardNumber}-square-hit`);
+      boardSquare.classList.remove(`board-${boardNumber}-square-miss`);
+
+      switch (squareStatus) {
+        case '':
+          boardSquare.classList.add(`board-${boardNumber}-square-empty`);
+          break;
+        case 'S':
+          boardSquare.classList.add(`board-${boardNumber}-square-ship`);
+          break;
+        case 'H':
+          boardSquare.classList.add(`board-${boardNumber}-square-hit`);
+          break;
+        case 'M':
+          boardSquare.classList.add(`board-${boardNumber}-square-miss`);
+          break;
+        default:
+          throw new Error('Something went wrong...');
+      }
+    });
+  });
+}
+
 function addBoardListeners(player, gameState) {
   let board;
-  let playerSquare;
-  if (player.type === 'human1') { 
-    board = boardOneSquares; 
-    playerSquare = 1;
-  }
-  else {
+  if (player.type === 'human1') {
+    board = boardOneSquares;
+  } else {
     board = boardTwoSquares;
-    playerSquare = 2;
   }
 
   board.forEach((boardSquare) => {
@@ -22,62 +62,24 @@ function addBoardListeners(player, gameState) {
       if (!player.isActive() && !gameState.isGameOver) {
         if (squareStatus === 'S') {
           squareStatus = player.gameboard.receiveAttack(squareCoords, gameState);
-          renderBoards(player);
+          renderBoards(gameState);
           gameState.switchPlayer();
         }
         if (squareStatus === '') {
           squareStatus = player.gameboard.receiveAttack(squareCoords, gameState);
-          renderBoards(player);
+          renderBoards(gameState);
           gameState.switchPlayer();
         }
       }
-    })
-  })
+    });
+  });
 }
 
 function addEventListeners(player, gameState) {
   addBoardListeners(player, gameState);
 }
 
-function renderBoards(player) {
-  const board = player.gameboard.board;
-  let boardSquares;
-
-  if (player.type === 'human1') {
-    boardSquares = boardOneSquares;
-  } else {
-    boardSquares = boardTwoSquares;
-  }
-
-  boardSquares.forEach((boardSquare) => {
-    const squareStatus = board.get(boardSquare.getAttribute('data')).status;
-
-    boardSquare.classList.remove(`board-1-square-empty`);
-    boardSquare.classList.remove(`board-1-square-ship`);
-    boardSquare.classList.remove(`board-1-square-hit`);
-    boardSquare.classList.remove(`board-1-square-miss`);
-
-    switch (squareStatus) {
-      case '':
-        boardSquare.classList.add(`board-1-square-empty`);
-        break;
-      case 'S':
-        boardSquare.classList.add(`board-1-square-ship`);
-        break;
-      case 'H':
-        boardSquare.classList.add(`board-1-square-hit`);
-        break;
-      case 'M':
-        boardSquare.classList.add(`board-1-square-miss`);
-        break;
-      default:
-        throw new Error('Something went wrong...');
-    }
-  });
-
-}
-
 export {
   addEventListeners,
-  renderBoards
-}
+  renderBoards,
+};

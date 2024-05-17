@@ -27,12 +27,12 @@ describe('AI', () => {
   });
 
   test('aiTron returns a random coordinate to hit', () => {
-    expect(aiPlayer.ai.chooseSquare()).toMatch(/[A-J][1-9]/);
+    expect(AITron3000.chooseSquare()).toMatch(/[A-J][1-9]/);
   });
 
   test('aiTron changes state of the square', () => {
     const previousState = humanPlayer.gameboard.board.get('A1');
-    aiPlayer.ai.makeMove(humanPlayer.gameboard, 'A1');
+    AITron3000.makeMove(humanPlayer.gameboard, 'A1');
     expect(humanPlayer.gameboard.board.get('A1').status).not.toBe(previousState);
   });
 })

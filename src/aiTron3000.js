@@ -1,35 +1,30 @@
-/*eslint-disable*/
 export default class AITron3000 {
-  constructor() {
-
-  }
-
-  makeMove(gameboard, coords = null) {
-    const board = gameboard.board;
+  static makeMove(gameboard, coords = null) {
+    let attackCoords = coords;
 
     if (coords === null) {
-      coords = this.chooseSquare;
+      attackCoords = AITron3000.chooseSquare();
     }
-
-    if (board.get(coords).status === '') {
-      board.get(coords).status = 'M';
-    } else if (board.get(coords).status === 'S') {
-      board.get(coords).status = 'H';
+    if (gameboard.board.get(attackCoords).status === 'M'
+    || gameboard.board.get(attackCoords).status === 'H') {
+      AITron3000.makeMove(gameboard, attackCoords);
+      return coords;
     }
-    return board.get(coords).status;
+    gameboard.receiveAttack(attackCoords);
+    return coords;
   }
-  
-chooseSquare() {
-  const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-  const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
 
-  const squareToAttack = letters[this.generateRandomInt(0, (letters.length - 1))] + 
-  numbers[this.generateRandomInt(0, (numbers.length - 1))];
+  static chooseSquare() {
+    const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+    const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
 
-  return squareToAttack;
-}
+    const squareToAttack = letters[AITron3000.generateRandomInt(0, (letters.length - 1))]
+    + numbers[AITron3000.generateRandomInt(0, (numbers.length - 1))];
 
-  generateRandomInt(min, max) {
+    return squareToAttack;
+  }
+
+  static generateRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 }
