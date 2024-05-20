@@ -1,5 +1,10 @@
+import addStars from "./starfield";
+
 const boardOneSquares = document.querySelectorAll('.board-1-square');
 const boardTwoSquares = document.querySelectorAll('.board-2-square');
+const mainMenu = document.querySelector('.main-menu');
+const mainContainer = document.querySelector('.main-container');
+const snglPlayerBtn = document.querySelector('.sngl-player');
 
 function renderBoards(gameState) {
   const players = [];
@@ -77,6 +82,11 @@ function addBoardListeners(player, gameState) {
 
 function addEventListeners(player, gameState) {
   addBoardListeners(player, gameState);
+  snglPlayerBtn.addEventListener('click', () => {
+    mainMenu.style.display = 'none';
+    mainContainer.style.display = 'block';
+    addStars();
+  });
 }
 
 export {

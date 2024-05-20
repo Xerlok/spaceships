@@ -1,3 +1,7 @@
+:root {
+  --main-text-colour: lightblue;
+}
+
 html,
 body {
   margin: 0px;
@@ -5,14 +9,33 @@ body {
   height: 100%;
   box-sizing: border-box;
   background-color: black;
-  color: lightblue;
+  color: var(--main-text-colour);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 header {
+  flex: 1;
   display: flex;
   justify-content: center;
   padding: 1rem;
   font-size: 2rem;
+}
+
+.main-menu {
+  flex: 6;
+  display: none; 
+  flex-direction: column;
+  justify-content: center;
+}
+
+main {
+  flex: 6;
+  /*display: none;*/
 }
 
 .boards-container {
@@ -38,6 +61,7 @@ header {
   background-color: #fff;
   border-radius: 50%;
   animation: twinkle 2s infinite linear;
+  pointer-events: none;
 }
 
 @keyframes twinkle {
@@ -77,4 +101,58 @@ td {
 .ui {
   display: flex;
   justify-content: center;
+}
+
+footer {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin: 2rem;
+}
+
+button {
+  align-items: center;
+  height: 50px;
+  width: 200px;
+  font-size: 2rem;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.377);
+  font-family: pixel;
+  background-color: black;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: .25rem;
+  color: var(--main-text-colour);
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  line-height: 1.25;
+  margin: 0;
+  min-height: 3rem;
+  padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+  text-decoration: none;
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  width: auto;
+}
+
+button:hover,
+button:focus {
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+  
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+button:active {
+  background-color: #F0F0F1;
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+  color: rgba(0, 0, 0, 0.65);
+  transform: translateY(0);
 }

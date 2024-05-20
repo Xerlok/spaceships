@@ -16,13 +16,10 @@ export default class AITron3000 {
         squaresToAttack.push(key);
       }
     });
-    console.log(squaresToAttack);
 
     const squareToAttack = squaresToAttack[
       AITron3000.generateRandomInt(0, (squaresToAttack.length - 1))
     ];
-
-    console.log(squareToAttack);
 
     return squareToAttack;
   }
