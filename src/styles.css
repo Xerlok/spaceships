@@ -122,6 +122,10 @@ td {
   background-color: gray;
 }
 
+.board-1-square.over {
+  background-color: pink;
+}
+
 .ui {
   display: flex;
   justify-content: center;

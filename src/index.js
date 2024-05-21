@@ -1,5 +1,5 @@
 import './styles.css';
-import { addEventListeners, renderBoards } from './dom';
+import { addEventListeners, renderBoards, addShipsPlacementListeners } from './dom';
 import Gameboard from './gameboard';
 import Player from './player';
 import GameState from './gameState';
@@ -17,6 +17,7 @@ addEventListeners(player1, gameState);
 player2.gameboard.buildBoard();
 addEventListeners(player2, gameState);
 player1.active = true;
+addShipsPlacementListeners(gameState);
 
 /*player1.gameboard.placeShip(1, ['H7']);
 player1.gameboard.placeShip(2, ['J3', 'J4']);

@@ -1,10 +1,14 @@
-import addStars from "./starfield";
+/* eslint-disable */
+import addStars from './starfield';
 
 const boardOneSquares = document.querySelectorAll('.board-1-square');
 const boardTwoSquares = document.querySelectorAll('.board-2-square');
 const mainMenu = document.querySelector('.main-menu');
 const mainContainer = document.querySelector('.main-container');
 const snglPlayerBtn = document.querySelector('.sngl-player');
+const ships = document.querySelectorAll('.ship-container');
+
+let dragStartShipLength = null;
 
 function renderBoards(gameState) {
   const players = [];
@@ -80,8 +84,46 @@ function addBoardListeners(player, gameState) {
   });
 }
 
+function addShipsPlacementListeners(gameState) {
+  ships.forEach((ship) => {
+    ship.addEventListener('dragstart', (e) => {
+      dragStartShipLength = e.target.getAttribute('data-length');
+    });
+  });
+
+  boardOneSquares.forEach((boardOneSquare) => {
+    boardOneSquare.addEventListener('dragenter', (e) => {
+      if (e.target.classList.contains('board-1-square')) {
+        e.target.classList.add('over');
+      }
+    });
+
+    boardOneSquare.addEventListener('dragleave', (e) => {
+      if (e.target.classList.contains('board-1-square')) {
+        e.target.classList.remove('over');
+      }
+    });
+
+    boardOneSquare.addEventListener('dragover', (e) => {
+      e.preventDefault();
+    });
+
+    boardOneSquare.addEventListener('drop', (e) => {
+      e.preventDefault();
+      if (e.target.classList.contains('board-1-square')) {
+        console.log('Ah!');
+        e.target.classList.remove('over');
+        const coords = e.target.getAttribute('data');
+        gameState.player1.gameboard.placeShip(dragStartShipLength, [coords]);
+        renderBoards(gameState);
+      }
+    });
+  });
+}
+
 function addEventListeners(player, gameState) {
   addBoardListeners(player, gameState);
+
   snglPlayerBtn.addEventListener('click', () => {
     mainMenu.style.display = 'none';
     mainContainer.style.display = 'block';
@@ -92,4 +134,5 @@ function addEventListeners(player, gameState) {
 export {
   addEventListeners,
   renderBoards,
+  addShipsPlacementListeners,
 };
