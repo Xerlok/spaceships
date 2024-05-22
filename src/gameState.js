@@ -5,7 +5,7 @@ export default class GameState {
     this.player1 = player1;
     this.player2 = player2;
     this.gameType = gameType;
-    this.isGameOver = false;
+    this.isGameOver = true;
   }
 
   switchPlayer() {

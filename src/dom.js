@@ -6,9 +6,11 @@ const boardTwoSquares = document.querySelectorAll('.board-2-square');
 const mainMenu = document.querySelector('.main-menu');
 const mainContainer = document.querySelector('.main-container');
 const snglPlayerBtn = document.querySelector('.sngl-player');
+const shipAxisBtn = document.querySelector('.ship-axis');
 const ships = document.querySelectorAll('.ship-container');
 
 let dragStartShipLength = null;
+let placementAxis = 'x';
 
 function renderBoards(gameState) {
   const players = [];
@@ -55,33 +57,59 @@ function renderBoards(gameState) {
   });
 }
 
-function addBoardListeners(player, gameState) {
+function addBoardListeners(players, gameState) {
   let board;
-  if (player.type === 'human1') {
-    board = boardOneSquares;
-  } else {
-    board = boardTwoSquares;
-  }
 
-  board.forEach((boardSquare) => {
-    let squareStatus = player.gameboard.board.get(boardSquare.getAttribute('data')).status;
-    const squareCoords = boardSquare.getAttribute('data');
-
-    boardSquare.addEventListener('click', () => {
-      if (!player.isActive() && !gameState.isGameOver) {
-        if (squareStatus === 'S') {
-          squareStatus = player.gameboard.receiveAttack(squareCoords, gameState);
-          gameState.switchPlayer();
-          renderBoards(gameState);
+  players.forEach((player) => {
+    if (player.type === 'human1') {
+      board = boardOneSquares;
+    } else {
+      board = boardTwoSquares;
+    }
+  
+    board.forEach((boardSquare) => {
+      let squareStatus = player.gameboard.board.get(boardSquare.getAttribute('data')).status;
+      const squareCoords = boardSquare.getAttribute('data');
+  
+      boardSquare.addEventListener('click', () => {
+        if (!player.isActive() && !gameState.isGameOver) {
+          if (squareStatus === 'S') {
+            squareStatus = player.gameboard.receiveAttack(squareCoords, gameState);
+            gameState.switchPlayer();
+            renderBoards(gameState);
+          }
+          if (squareStatus === '') {
+            squareStatus = player.gameboard.receiveAttack(squareCoords, gameState);
+            gameState.switchPlayer();
+            renderBoards(gameState);
+          }
         }
-        if (squareStatus === '') {
-          squareStatus = player.gameboard.receiveAttack(squareCoords, gameState);
-          gameState.switchPlayer();
-          renderBoards(gameState);
-        }
-      }
+      });
     });
-  });
+  })
+}
+
+function dropShip(gameState, coords) {
+  const newShipCoords = [];
+  let adjacentSquare;
+  newShipCoords.push(coords);
+
+  if (placementAxis === 'x') {
+    if (dragStartShipLength > 1) {
+      for (let i = 1; i < dragStartShipLength; i += 1) {
+        adjacentSquare = `${coords.charAt(0)}${parseInt(coords.charAt(1)) + i}`;
+        newShipCoords.push(adjacentSquare);
+      }
+    }
+  } else if (placementAxis = 'y') {
+    for (let i = 1; i < dragStartShipLength; i += 1) {
+      adjacentSquare = `${String.fromCharCode(coords.charCodeAt(0) + i)}${coords.charAt(1) + coords.charAt(2)}`;
+      newShipCoords.push(adjacentSquare);
+    }
+  }
+  
+  gameState.player1.gameboard.placeShip(dragStartShipLength, newShipCoords);
+  renderBoards(gameState);
 }
 
 function addShipsPlacementListeners(gameState) {
@@ -114,25 +142,32 @@ function addShipsPlacementListeners(gameState) {
         console.log('Ah!');
         e.target.classList.remove('over');
         const coords = e.target.getAttribute('data');
-        gameState.player1.gameboard.placeShip(dragStartShipLength, [coords]);
-        renderBoards(gameState);
+        dropShip(gameState, coords)
       }
     });
   });
 }
 
-function addEventListeners(player, gameState) {
-  addBoardListeners(player, gameState);
-
+function addButtonsListeners() {
   snglPlayerBtn.addEventListener('click', () => {
     mainMenu.style.display = 'none';
     mainContainer.style.display = 'block';
     addStars();
   });
+
+  shipAxisBtn.addEventListener('click', () => {
+    placementAxis = (placementAxis === 'x') ? 'y' : 'x';
+    shipAxisBtn.innerText = (placementAxis === 'x') ? 'Placement: Horizontal' : 'Placement: Vertical';
+  });
+}
+
+function addEventListeners(players, gameState) {
+  addBoardListeners(players, gameState);
+  addShipsPlacementListeners(gameState);
+  addButtonsListeners();
 }
 
 export {
   addEventListeners,
   renderBoards,
-  addShipsPlacementListeners,
 };
