@@ -108,7 +108,8 @@ function dropShip(gameState, coords) {
     }
   }
   
-  gameState.player1.gameboard.placeShip(dragStartShipLength, newShipCoords);
+  const result = gameState.player1.gameboard.placeShip(dragStartShipLength, newShipCoords);
+  console.log(result);
   renderBoards(gameState);
 }
 

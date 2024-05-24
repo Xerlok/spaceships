@@ -23,15 +23,24 @@ export default class Gameboard {
       throw new Error('Board is not build!');
     }
 
-    const newShipCoordinates = [];
+    let newShipCoordinates = [];
     const newShip = new Ship(shipLength);
 
     for (let i = 0; i < coords.length; i += 1) {
-      this.board.set(coords[i], { status: 'S', ship: newShip });
-      newShipCoordinates.push(coords[i]);
+      if (this.board.get(coords[i]).status === 'S') {
+        newShipCoordinates = null;
+        break;
+      } else {
+        newShipCoordinates.push(coords[i]);
+      }
     }
 
-    this.ships.push(newShip);
+    if (newShipCoordinates !== null) {
+      newShipCoordinates.forEach((newShipCoord) => {
+        this.board.set(newShipCoord, { status: 'S', ship: newShip });
+      });
+      this.ships.push(newShip);
+    }
 
     return newShipCoordinates;
   }

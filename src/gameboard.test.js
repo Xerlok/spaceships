@@ -30,6 +30,11 @@ describe('player1.gameboard', () => {
     expect(player1.gameboard.placeShip(5, ['A7', 'B7', 'C7', 'D7', 'E7'])).toStrictEqual(['A7', 'B7', 'C7', 'D7', 'E7']);
   });
 
+  test('does not place ship in occupied square', () => {
+    player1.gameboard.placeShip(3, ['C4', 'D4', 'E4']);
+    expect(player1.gameboard.placeShip(3, ['C2', 'C3', 'C4'])).toBe(null);
+  });
+
   test('receives ship attack', () => {
     player1.gameboard.placeShip(1, ['A1']);
     expect(player1.gameboard.receiveAttack('A1')).toBe('H');
