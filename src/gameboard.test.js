@@ -35,6 +35,11 @@ describe('player1.gameboard', () => {
     expect(player1.gameboard.placeShip(3, ['C2', 'C3', 'C4'])).toBe(null);
   });
 
+  test('does not place ship out of board bounds', () => {
+    expect(player1.gameboard.placeShip(4, ['C8', 'C9', 'C10', 'C11'])).toBe(null);
+    expect(player1.gameboard.placeShip(4, ['I8', 'J8', 'K8', 'L8'])).toBe(null);
+  });
+
   test('receives ship attack', () => {
     player1.gameboard.placeShip(1, ['A1']);
     expect(player1.gameboard.receiveAttack('A1')).toBe('H');

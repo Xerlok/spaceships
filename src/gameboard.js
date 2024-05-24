@@ -27,7 +27,7 @@ export default class Gameboard {
     const newShip = new Ship(shipLength);
 
     for (let i = 0; i < coords.length; i += 1) {
-      if (this.board.get(coords[i]).status === 'S') {
+      if (!this.board.get(coords[i]) || this.board.get(coords[i]).status === 'S') {
         newShipCoordinates = null;
         break;
       } else {
