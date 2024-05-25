@@ -97,7 +97,7 @@ function dropShip(gameState, coords) {
   if (placementAxis === 'x') {
     if (dragStartShipLength > 1) {
       for (let i = 1; i < dragStartShipLength; i += 1) {
-        adjacentSquare = `${coords.charAt(0)}${parseInt(coords.charAt(1)) + i}`;
+        adjacentSquare = `${coords.charAt(0)}${parseInt(coords.charAt(1) + coords.charAt(2)) + i}`;
         newShipCoords.push(adjacentSquare);
       }
     }
@@ -109,8 +109,8 @@ function dropShip(gameState, coords) {
   }
   
   const result = gameState.player1.gameboard.placeShip(dragStartShipLength, newShipCoords);
-  console.log(result);
   renderBoards(gameState);
+  return result;
 }
 
 function addShipsPlacementListeners(gameState) {
@@ -140,10 +140,12 @@ function addShipsPlacementListeners(gameState) {
     boardOneSquare.addEventListener('drop', (e) => {
       e.preventDefault();
       if (e.target.classList.contains('board-1-square')) {
-        console.log('Ah!');
         e.target.classList.remove('over');
         const coords = e.target.getAttribute('data');
-        dropShip(gameState, coords)
+        const dropResult = dropShip(gameState, coords);
+        if (dropResult === null) {
+          alert('Wrong placement!');
+        }
       }
     });
   });
