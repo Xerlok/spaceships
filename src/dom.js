@@ -6,11 +6,13 @@ const boardTwoSquares = document.querySelectorAll('.board-2-square');
 const mainMenu = document.querySelector('.main-menu');
 const mainContainer = document.querySelector('.main-container');
 const snglPlayerBtn = document.querySelector('.sngl-player');
+const shipPlacementContainer = document.querySelector('.ship-placement-container'); 
 const shipAxisBtn = document.querySelector('.ship-axis');
 const ships = document.querySelectorAll('.ship-container');
 
 let dragStartShipLength = null;
 let placementAxis = 'x';
+let shipsPlaced = 0;
 
 function renderBoards(gameState) {
   const players = [];
@@ -89,6 +91,11 @@ function addBoardListeners(players, gameState) {
   })
 }
 
+function startGame(gameState) {
+  shipPlacementContainer.style.display = 'none';
+  gameState.isGameOver = false;
+}
+
 function dropShip(gameState, coords) {
   const newShipCoords = [];
   let adjacentSquare;
@@ -109,6 +116,10 @@ function dropShip(gameState, coords) {
   }
   
   const result = gameState.player1.gameboard.placeShip(dragStartShipLength, newShipCoords);
+  if (result !== null) { shipsPlaced += 1; }
+  if (shipsPlaced === 5) {
+    startGame(gameState);
+  }
   renderBoards(gameState);
   return result;
 }
