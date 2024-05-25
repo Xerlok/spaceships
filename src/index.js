@@ -15,7 +15,7 @@ gameState.player2 = player2;
 player1.gameboard.buildBoard();
 player2.gameboard.buildBoard();
 player1.active = true;
-addEventListeners([player1, player2], gameState);
+addEventListeners(gameState);
 
 player2.gameboard.placeShip(1, ['A1']);
 player2.gameboard.placeShip(2, ['B4', 'B5']);
