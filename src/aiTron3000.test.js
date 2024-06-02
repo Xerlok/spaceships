@@ -27,13 +27,20 @@ describe('AI', () => {
   });
 
   test('aiTron returns a random coordinate to hit', () => {
-    expect(AITron3000.chooseSquare(humanPlayer.gameboard.board)).toMatch(/[A-J][1-9]/);
+    expect(aiPlayer.ai.chooseSquare(humanPlayer.gameboard.board)).toMatch(/[A-J][1-9]/);
   });
 
   test('aiTron changes state of the square', () => {
     const previousState = humanPlayer.gameboard.board.get('A1');
-    AITron3000.makeMove(humanPlayer.gameboard, 'A1');
+    aiPlayer.ai.makeMove(humanPlayer.gameboard, 'A1');
     expect(humanPlayer.gameboard.board.get('A1').status).not.toBe(previousState);
+  });
+
+  test('aiTron shoots coords near hit ship', () => {
+    let possibleValues = ['B2', 'B4', 'A3', 'C3'];
+    gameState.player1.gameboard.placeShip(2, ['B3', 'B4']);
+    aiPlayer.ai.makeMove(humanPlayer.gameboard, 'B3');
+    expect(possibleValues).toContain(aiPlayer.ai.makeMove(humanPlayer.gameboard));
   });
 })
 

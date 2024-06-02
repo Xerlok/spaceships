@@ -1,7 +1,8 @@
 import './styles.css';
-import { addEventListeners, renderBoards, addShipsPlacementListeners } from './dom';
+import { addEventListeners, renderBoards } from './dom';
 import Gameboard from './gameboard';
 import Player from './player';
+import AITron3000 from './aiTron3000';
 import GameState from './gameState';
 import addStars from './starfield';
 
@@ -9,8 +10,10 @@ addStars();
 const gameState = new GameState('ai');
 const player1 = new Player('Zerus', 'human1', new Gameboard(gameState));
 const player2 = new Player('AItron3000', 'ai', new Gameboard(gameState));
+const aiTron3000 = new AITron3000();
 gameState.player1 = player1;
 gameState.player2 = player2;
+gameState.player2.ai = aiTron3000;
 
 player1.gameboard.buildBoard();
 player2.gameboard.buildBoard();

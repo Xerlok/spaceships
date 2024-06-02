@@ -1,16 +1,15 @@
-import AITron3000 from './aiTron3000';
-
 export default class GameState {
   constructor(gameType = 'ai', player1 = null, player2 = null) {
     this.player1 = player1;
     this.player2 = player2;
     this.gameType = gameType;
     this.isGameOver = true;
+    this.isGameStart = false;
   }
 
   switchPlayer() {
     if (this.gameType === 'ai' && !this.isGameOver) {
-      AITron3000.makeMove(this.player1.gameboard);
+      this.player2.ai.makeMove(this.player1.gameboard);
     } else {
       if (this.player1.isActive()) {
         this.player1.active = false;
