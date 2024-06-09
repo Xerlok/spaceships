@@ -150,6 +150,7 @@ function dropShip(gameState, coords) {
   }
   renderBoards(gameState);
   return result;
+  // I also need to put ship into gameboard
 }
 
 function addShipsPlacementListeners(gameState) {
